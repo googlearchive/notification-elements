@@ -1,0 +1,73 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+The `notification-alert` element sends a notification alert.
+
+##### Example
+
+    <notification-alert message="Hi there!"></notification-alert>
+
+    <script>
+      document.querySelector('notification-alert').notify();
+    </script>
+
+@element notification-alert
+@blurb The `notification-alert` element sends a notification alert.
+@status alpha
+@url github.io
+-->
+<polymer-element name="notification-alert">
+
+  <script>
+
+    Polymer({
+      /**
+       * The `notificaiton-dismissed` event is fired when the notification
+       * is dismissed.,
+       * 
+       * @event notificaiton-dismissed
+       */
+
+      publish: {
+        /**
+         * The `title` property sets the title of the notification.
+         * 
+         * @attribute title
+         * @type string
+         * @default ''
+         */
+         title: '',
+         /**
+         * The `message` property sets the content of the notification.
+         * 
+         * @attribute message
+         * @type string
+         * @default ''
+         */
+         message: '',
+         /**
+         * The `icon` property sets an icon for the notification.
+         * 
+         * @attribute icon
+         * @type string
+         * @default ''
+         */
+         icon: ''
+      },
+
+      /**
+       * The `notify` method issues the notification.
+       * 
+       * @method notify
+       * @return {Object} Returns undefined.
+       */
+      notify: function() {
+        alert(this.message);
+        this.asyncFire('notification-dismissed');
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

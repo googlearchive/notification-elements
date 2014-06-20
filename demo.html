@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+
+  <title>notification-elements Demo</title>
+
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="notification-alert.html">
+
+</head>
+<body unresolved>
+  <template is="auto-binding">
+    Message:
+    <input value="{{message}}">
+    <button on-tap="{{notify}}">Notify!</button>
+    <notification-alert id="notification" message="{{message}}" on-notification-dismissed="{{dismissed}}"></notification-alert>
+  </template>
+
+  <script>
+
+    var scope = document.querySelector('template');
+
+    scope.message = 'Hi there!';
+
+    scope.notify = function() {
+      scope.$.notification.notify();
+    }
+
+    scope.dismissed = function(e) {
+      console.log('dismissed! notification with message', e.target.message);
+    }
+
+   
+  </script>
+
+</body>
+</html>
