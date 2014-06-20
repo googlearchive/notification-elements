@@ -11,10 +11,23 @@
 </head>
 <body unresolved>
   <template is="auto-binding">
-    Message:
+    Notification Title:
+    <input value="{{header}}">
+    <br>
+    Notification Message:
     <input value="{{message}}">
+    <br>
+    Auto Close (in ms):
+    <input type="number" value="{{autoClose}}" placeholder="auto close in ms">
+    <br>
+    Notification name:
+    <input type="text" value="{{name}}" placeholder="name">
+    <br>
+    Icon url:
+    <input type="text" value="{{url}}" placeholder="Icon URL">
+    <br>
     <button on-tap="{{notify}}">Notify!</button>
-    <notification-alert id="notification" title="Notification Test" message="{{message}}" on-notification-dismissed="{{dismissed}}"></notification-alert>
+    <notification-alert id="notification" header="{{header}}" message="{{message}}" name="{{name}}" autoClose="{{autoClose}}" icon="{{url}}" on-notification-dismissed="{{dismissed}}"></notification-alert>
     <pre id="output"></pre>
   </template>
 
@@ -22,6 +35,7 @@
 
     var scope = document.querySelector('template');
 
+    scope.header = 'Notification Test'
     scope.message = 'Hi there!';
 
     scope.notify = function() {
@@ -29,11 +43,12 @@
     }
 
     scope.dismissed = function(e) {
-      scope.$.output.textContent += 'dismissed! notification with message: ' + e.target.message + '\n';
-      console.log('dismissed! notification with message', e.target.message);
+      var log = 'dismissed notification with message: ' + e.target.message;
+      scope.$.output.textContent += log + '\n';
+      console.log(log);
     }
 
-   
+
   </script>
 
 </body>

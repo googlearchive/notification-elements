@@ -30,13 +30,13 @@ The `notification-alert` element sends a notification alert.
 
       publish: {
         /**
-         * The `title` property sets the title of the notification.
+         * The `header` property sets the title of the notification.
          * 
-         * @attribute title
+         * @attribute header
          * @type string
          * @default ''
          */
-         title: '',
+         header: '',
          /**
          * The `message` property sets the content of the notification.
          * 
@@ -52,7 +52,23 @@ The `notification-alert` element sends a notification alert.
          * @type string
          * @default ''
          */
-         icon: ''
+         icon: '',
+         /**
+          * The `name` property sets a name for the notification.
+          *
+          * Named notifications will replace older notifications with the same name.
+          * @attribute tag
+          * @type string
+          * @default ''
+          */
+         name: '',
+         /**
+          * The `autoClose` property will close the notification after `N` milliseconds
+          * @attribute autoClose
+          * @type Number
+          * @default 0
+          */
+         autoClose: 0
       },
 
       /**
@@ -63,12 +79,19 @@ The `notification-alert` element sends a notification alert.
        */
       notify: function() {
         if (window.Notification) {
+          // requestPermission asks the user to allow permissions never, once or forever
           Notification.requestPermission(function(perm) {
             if (perm === 'granted') {
-              var n = new Notification(this.title, {body: this.message, icon: this.icon});
+              // the act of making a Notification object causes it to display
+              var n = new Notification(this.header, {body: this.message, icon: this.icon, tag: this.name});
+
               n.onclose = function() {
                 this.asyncFire('notification-dismissed');
               }.bind(this);
+
+              if (this.autoClose) {
+                setTimeout(n.close.bind(n), this.autoClose);
+              }
             }
           }.bind(this));
         }
