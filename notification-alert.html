@@ -46,7 +46,7 @@ The `notification-alert` element sends a notification alert.
          */
          message: '',
          /**
-         * The `icon` property sets an icon for the notification.
+         * The `icon` property sets an icon url for the notification.
          * 
          * @attribute icon
          * @type string
@@ -62,8 +62,16 @@ The `notification-alert` element sends a notification alert.
        * @return {Object} Returns undefined.
        */
       notify: function() {
-        alert(this.message);
-        this.asyncFire('notification-dismissed');
+        if (window.Notification) {
+          Notification.requestPermission(function(perm) {
+            if (perm === 'granted') {
+              var n = new Notification(this.title, {body: this.message, icon: this.icon});
+              n.onclose = function() {
+                this.asyncFire('notification-dismissed');
+              }.bind(this);
+            }
+          }.bind(this));
+        }
       }
 
     });

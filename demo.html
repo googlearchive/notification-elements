@@ -4,6 +4,7 @@
 
   <title>notification-elements Demo</title>
 
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
   <script src="../platform/platform.js"></script>
   <link rel="import" href="notification-alert.html">
 
@@ -13,7 +14,8 @@
     Message:
     <input value="{{message}}">
     <button on-tap="{{notify}}">Notify!</button>
-    <notification-alert id="notification" message="{{message}}" on-notification-dismissed="{{dismissed}}"></notification-alert>
+    <notification-alert id="notification" title="Notification Test" message="{{message}}" on-notification-dismissed="{{dismissed}}"></notification-alert>
+    <pre id="output"></pre>
   </template>
 
   <script>
@@ -27,6 +29,7 @@
     }
 
     scope.dismissed = function(e) {
+      scope.$.output.textContent += 'dismissed! notification with message: ' + e.target.message;
       console.log('dismissed! notification with message', e.target.message);
     }
 
