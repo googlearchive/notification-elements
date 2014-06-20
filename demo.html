@@ -29,7 +29,7 @@
     }
 
     scope.dismissed = function(e) {
-      scope.$.output.textContent += 'dismissed! notification with message: ' + e.target.message;
+      scope.$.output.textContent += 'dismissed! notification with message: ' + e.target.message + '\n';
       console.log('dismissed! notification with message', e.target.message);
     }
 
