@@ -85,6 +85,14 @@ The `notification-alert` element sends a notification alert.
               // the act of making a Notification object causes it to display
               var n = new Notification(this.header, {body: this.message, icon: this.icon, tag: this.name});
 
+              // TODO(dfreedm): work around Notification.tag not working on android chrome build
+              if (this.name) {
+                if (this._notification) {
+                  this._notification.close();
+                }
+                this._notification = n;
+              }
+
               n.onclose = function() {
                 this.asyncFire('notification-dismissed');
               }.bind(this);
