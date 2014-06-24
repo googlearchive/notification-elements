@@ -83,7 +83,11 @@ The `notification-alert` element sends a notification alert.
           Notification.requestPermission(function(perm) {
             if (perm === 'granted') {
               // the act of making a Notification object causes it to display
-              var n = new Notification(this.header, {body: this.message, icon: this.icon, tag: this.name});
+              var n = new Notification(this.header, {
+                body: this.message,
+                icon: this.resolvePath(this.icon),
+                tag: this.name
+              });
 
               // TODO(dfreedm): work around Notification.tag not working on android chrome build
               if (this.name) {
